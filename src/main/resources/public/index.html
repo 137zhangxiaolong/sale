@@ -33,7 +33,7 @@
             }else if(pwd==null || pwd==""){
                 alert("密码必填");
             }else{
-                alert("");
+                //alert("");
                 //console.log("登录");
                 $.post("userLogin",$("#loginform").serialize(),function (res) {
                     var obj = $.dealJSONObj(res);
