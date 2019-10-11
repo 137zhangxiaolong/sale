@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ambow.springboot.demo.mapper.ProductMapper">
+    <select id="getAllProduct" resultType="com.ambow.springboot.demo.model.Product">
+        select *
+        from product
+    </select>
+
+    <select id="getProductById" resultType="com.ambow.springboot.demo.model.Product">
+        select *
+        from product
+        where id=#{id}
+    </select>
+
+    <update id="updateProduct" parameterType="com.ambow.springboot.demo.model.Product">
+        UPDATE product
+        SET productname=#{product.productname},
+        quantity=#{product.quantity}
+        WHERE id =#{product.id}
+    </update>
+</mapper>

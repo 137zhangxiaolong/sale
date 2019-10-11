@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ambow.springboot.demo.mapper.SaleMapper">
+    <insert id="AddSale" parameterType="com.ambow.springboot.demo.model.Sale">
+        INSERT INTO sale(price,quantity,totalprice,saledate,userid,productid)
+        VALUES(#{mysale.price},
+        #{mysale.quantity},
+        #{mysale.totalprice},
+        #{mysale.saledate},
+        #{mysale.user.id},
+        #{mysale.product.id}
+        )
+    </insert>
+    <select id="findAllSale" resultMap="allsale">
+        SELECT sale.id,
+        sale.price,
+        sale.quantity,
+        sale.totalprice,
+        sale.saledate,
+        users.id userid,
+        users.username username,
+        pro.id productid,
+        pro.productname productname
+        FROM sale sale
+        LEFT JOIN users users ON users.id = sale.userid
+        LEFT JOIN product pro ON pro.id = sale.productid
+        <if test="saledate != null">
+            ORDER BY sale.saledate DESC
+        </if>
+
+        <if test="totalprice != null">
+            ORDER BY sale.totalprice DESC
+        </if>
+    </select>
+
+    <resultMap id="allsale" type="com.ambow.springboot.demo.model.Sale">
+        <id property="id" column="id"></id>
+        <result property="price" column="price"></result>
+        <result property="quantity" column="quantity"></result>
+        <result property="totalprice" column="totalprice"></result>
+        <result property="saledate" column="saledate"></result>
+        <association property="user" javaType="com.ambow.springboot.demo.model.User">
+            <id property="id" column="userid"></id>
+            <result property="userName" column="username"></result>
+        </association>
+        <association property="product" javaType="com.ambow.springboot.demo.model.Product">
+            <id property="id" column="productid"></id>
+            <result property="productname" column="productname"></result>
+        </association>
+    </resultMap>
+
+
+</mapper>
